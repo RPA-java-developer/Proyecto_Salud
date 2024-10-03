@@ -1,0 +1,44 @@
+
+scripts base de datos MySQL
+
+
+create database salud;
+use salud;
+
+
+create table Tipoidentific (
+	idT int unsigned auto_increment,
+    descripcion varchar(200) not null,
+    primary key (idT)
+);
+
+
+
+create table Afiliado (
+	idA int unsigned auto_increment,
+    numero varchar(100) not null,
+    nombres varchar(200) not null,
+    apellidos varchar(200) not null,
+    email varchar(50) not null,
+    unique u_email (email),    
+    direccion varchar(500),
+    telefono varchar(15),
+    genero varchar(2),
+    idT int not null,
+    unique u_afiliadotipoidenti (idA, idT),
+    primary key (idA)
+);
+
+ alter table Afiliado
+ add constraint CK_genero
+ check (genero='M' or genero='F');
+ 
+ 
+alter table Afiliado
+ADD CONSTRAINT afiliadotipoidenti
+foreign key (idT) references Tipoidentific(idT)
+on delete set null
+on update cascade;
+
+
+
